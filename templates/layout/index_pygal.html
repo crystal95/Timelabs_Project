@@ -1,0 +1,136 @@
+{% extends "layout.html" %}
+{% block body %}
+<head>
+<style>
+#header {
+    background-color:black;
+    color:white;
+    text-align:center;
+    padding:25px;
+}
+#nav {
+    line-height:30px;
+    background-color:#eeeeee;
+    height:700px;
+    width:300px;
+    float:left;
+    padding:5px;          
+}
+#section {
+    width:350px;
+    float:left;
+    padding:10px;        
+}
+#footer {
+    background-color:black;
+    color:white;
+    clear:both;
+    text-align:center;
+   padding:5px;      
+}
+.button {
+    background-color:black; /* Green */
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 12px;
+}
+</style>
+</head>
+<script type="text/javascript">
+var removed = false;
+var cnt=0;
+  $(function() {
+    var submit_form = function(e) {
+       //var array = $('input[name="a"]').val().split(',');
+        console.log($('input[name="a"]').val())
+      $.getJSON($SCRIPT_ROOT + '/_add_numbers', {
+        wordlist: $('input[name="a"]').val(),
+        wordlist2: $('input[name="b"]').val() 
+      
+      }, function(data) {
+       
+        
+       // if($('input[name="b"]').val()=="matplotlib")
+        //{
+        //console.log("sadfg");  
+        //}
+      if(1==1)//else
+     { 
+
+      var iframe = document.createElement('iframe');       
+       document.body.appendChild(iframe);
+
+      iframe.src = data.result;  
+      iframe.width = 650;
+      iframe.height = 500;
+      iframe.id="myid";
+      x=document.getElementById("section");
+      x.appendChild(iframe);
+
+      $( document.getElementById("clear")).click(function(){
+       cnt=cnt+1;
+    if(iframe.parentNode==null)
+    {
+      console.log("ys its null :/");
+       //iframe.parentNode=document.getElementById("section")
+       x=document.getElementById("section");
+       return ;
+     }
+        iframe.parentNode.removeChild(iframe);
+        
+
+   });
+    }
+      });
+      return false;
+    };
+     $( document.getElementById("calculate")).bind('click', submit_form);
+    $('input[type=text]').bind('keydown', function(e) {
+      if (e.keyCode == 13) {
+        submit_form(e);
+      }
+    });
+    $('input[name=a]').focus();
+    
+  });
+</script>
+<div id="header">
+<h1>PROTOTYPE</h1>
+</div>
+ <script>
+
+    
+</script>
+<div id="nav">
+<p id="danish">
+  Input Time Series File <br>
+  <input type="text" size="35" name="a"> <br><br><br>
+  Python Library for Displaying Graph <br>
+  <input type="text" size="35" name="b"> 
+  <span id="result">  </span>
+<p>
+  <br><br>
+ <button class="button button1" id="calculate">Build Graph</button>
+  <button class="button button1" id="clear">Clear</button>
+
+    
+
+</div>
+<div id="section">
+<h2>GRAPHS</h2>
+<p></p>
+
+</div>
+
+<div id="footer">
+Danish Sodhi
+</div>
+
+{% endblock %}  
